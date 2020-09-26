@@ -15,7 +15,6 @@ namespace SimpleConcepts.DistributedDictionary
         private readonly IValueSerializer _valueSerializer;
         private readonly string _keyNamespace;
         private readonly string _keyPrefix;
-        private readonly DistributedCacheEntryOptions _defaultEntryOptions;
 
         public DistributedDictionary(IDistributedCache distributedCache, IOptions<DistributedDictionaryOptions> options)
         {
@@ -25,20 +24,14 @@ namespace SimpleConcepts.DistributedDictionary
             _keyPrefix = options.Value.KeyPrefix ?? typeof(TValue).FullName;
             _keySerializer = options.Value.KeySerializer ?? new DefaultKeySerializer();
             _valueSerializer = options.Value.ValueSerializer ?? new JsonValueSerializer();
-            _defaultEntryOptions = options.Value.DefaultEntryOptions ?? new DistributedCacheEntryOptions();
         }
 
-        public Task SetAsync(TKey key, TValue value, CancellationToken cancellationToken = default)
-        {
-            return SetAsync(key, value, _defaultEntryOptions, cancellationToken);
-        }
-
-        public async Task SetAsync(TKey key, TValue value, DistributedCacheEntryOptions entryOptions, CancellationToken cancellationToken = default)
+        public async Task SetAsync(TKey key, TValue value, CancellationToken cancellationToken = default)
         {
             var sKey = SerializeKey(key);
             var bytes = _valueSerializer.Serialize(value);
 
-            await _distributedCache.SetAsync(sKey, bytes, entryOptions, cancellationToken);
+            await _distributedCache.SetAsync(sKey, bytes, cancellationToken);
         }
 
         public async Task<TValue> GetAsync(TKey key, CancellationToken cancellationToken = default)
@@ -50,6 +43,13 @@ namespace SimpleConcepts.DistributedDictionary
             }
 
             return (TValue)_valueSerializer.Deserialize(bytes, typeof(TValue));
+        }
+
+        public async Task<bool> ContainsKeyAsync(TKey key, CancellationToken cancellationToken = default)
+        {
+            var bytes = await _distributedCache.GetAsync(SerializeKey(key), cancellationToken);
+
+            return bytes != null;
         }
 
         public async Task<TValue> GetOrDefaultAsync(TKey key, CancellationToken cancellationToken = default)
@@ -73,11 +73,6 @@ namespace SimpleConcepts.DistributedDictionary
         public Task RemoveAsync(TKey key, CancellationToken cancellationToken = default)
         {
             return _distributedCache.RemoveAsync(SerializeKey(key), cancellationToken);
-        }
-
-        public Task RefreshAsync(TKey key, CancellationToken cancellationToken = default)
-        {
-            return _distributedCache.RefreshAsync(SerializeKey(key), cancellationToken);
         }
 
         private string SerializeKey(TKey key)

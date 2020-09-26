@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConcepts.DistributedDictionary", "SimpleConcepts.DistributedDictionary\SimpleConcepts.DistributedDictionary.csproj", "{A28DCDB5-4378-450A-9F04-8CE718F3947E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.DistributedDictionary", "SimpleConcepts.DistributedDictionary\SimpleConcepts.DistributedDictionary.csproj", "{A28DCDB5-4378-450A-9F04-8CE718F3947E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConcepts.DistributedDictionary.Tests", "SimpleConcepts.DistributedDictionary.Tests\SimpleConcepts.DistributedDictionary.Tests.csproj", "{A0B92D7E-A88E-4115-A569-25ACE8481F68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.DistributedDictionary.Tests", "SimpleConcepts.DistributedDictionary.Tests\SimpleConcepts.DistributedDictionary.Tests.csproj", "{A0B92D7E-A88E-4115-A569-25ACE8481F68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConcepts.Extensions.Caching", "SimpleConcepts.Extensions.DistributedCache\SimpleConcepts.Extensions.Caching.csproj", "{531D00D9-92C6-4E94-92CB-E94B97E45335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A0B92D7E-A88E-4115-A569-25ACE8481F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B92D7E-A88E-4115-A569-25ACE8481F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B92D7E-A88E-4115-A569-25ACE8481F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{531D00D9-92C6-4E94-92CB-E94B97E45335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{531D00D9-92C6-4E94-92CB-E94B97E45335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{531D00D9-92C6-4E94-92CB-E94B97E45335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{531D00D9-92C6-4E94-92CB-E94B97E45335}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
