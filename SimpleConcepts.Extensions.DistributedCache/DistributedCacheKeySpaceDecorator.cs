@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 
-namespace SimpleConcepts.Extensions.Caching.Distributed
+namespace SimpleConcepts.Extensions.Caching
 {
-    public class KeyPrefixingDecorator : IDistributedCache
+    public class DistributedCacheKeySpaceDecorator : IDistributedCache
     {
         private readonly string _prefix;
         private readonly IDistributedCache _cache;
 
-        public KeyPrefixingDecorator(IOptions<KeyPrefixingOptions> options, IDistributedCache cache)
+        public DistributedCacheKeySpaceDecorator(IOptions<DistributedCacheKeySpaceOptions> options, IDistributedCache cache)
         {
-            _prefix = options.Value.Prefix;
+            _prefix = options.Value.KeySpace;
             _cache = cache;
         }
 

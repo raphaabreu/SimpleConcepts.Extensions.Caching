@@ -1,4 +1,4 @@
-namespace SimpleConcepts.DistributedDictionary.Tests
+namespace SimpleConcepts.Extensions.Caching.Tests
 {
     public class TestPerson
     {

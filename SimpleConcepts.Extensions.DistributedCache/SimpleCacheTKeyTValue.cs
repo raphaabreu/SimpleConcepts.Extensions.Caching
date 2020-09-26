@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 
-namespace SimpleConcepts.Extensions.Caching.Distributed
+namespace SimpleConcepts.Extensions.Caching
 {
-    public class DistributedCache<TKey, TValue> : IDistributedCache<TKey, TValue>
+    public class SimpleCache<TKey, TValue> : ISimpleCache<TKey, TValue>
     {
         private readonly IDistributedCache _cache;
-        private readonly string _keyPrefix;
+        private readonly string _keySpace;
         private readonly IKeySerializer _keySerializer;
         private readonly IValueSerializer _valueSerializer;
         private readonly DistributedCacheEntryOptions _defaultEntryOptions;
 
-        public DistributedCache(IDistributedCache cache, IOptions<DistributedCacheOptions> options)
+        public SimpleCache(IDistributedCache cache, IOptions<SimpleCacheOptions> options)
         {
             _cache = cache;
-            _keyPrefix = options.Value.KeyPrefix ?? typeof(TValue).FullName + ":";
+            _keySpace = options.Value.KeySpace ?? typeof(TValue).FullName + ":";
             _keySerializer = options.Value.KeySerializer ?? new DefaultKeySerializer();
             _valueSerializer = options.Value.ValueSerializer ?? new JsonValueSerializer();
             _defaultEntryOptions = options.Value.DefaultEntryOptions ?? new DistributedCacheEntryOptions();
@@ -73,7 +73,7 @@ namespace SimpleConcepts.Extensions.Caching.Distributed
 
         private string SerializeKey(TKey key)
         {
-            return _keyPrefix + _keySerializer.Serialize(key);
+            return _keySpace + _keySerializer.Serialize(key);
         }
 
         private byte[] SerializeValue(TValue value)

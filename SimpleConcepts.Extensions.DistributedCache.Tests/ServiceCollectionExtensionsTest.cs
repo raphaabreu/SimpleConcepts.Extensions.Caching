@@ -57,7 +57,7 @@ namespace SimpleConcepts.DistributedDictionary.Tests
             // Assert
             var provider = services.BuildServiceProvider();
             var fac = provider.GetService<IDistributedDictionaryFactory>();
-            var dic = fac.CreateDistributedDictionary<int, int>("customDic");
+            var dic = fac.Create<int, int>("customDic");
             Assert.NotNull(dic);
         }
     }

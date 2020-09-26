@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace SimpleConcepts.Extensions.Caching.Distributed
+namespace SimpleConcepts.Extensions.Caching
 {
-    public static class DistributedCacheFallbackExtensions
+    public static class SimpleCacheFallbackExtensions
     {
-        public static TValue Get<TKey, TValue>(this IDistributedCache<TKey, TValue> cache, TKey key,
+        public static TValue Get<TKey, TValue>(this ISimpleCache<TKey, TValue> cache, TKey key,
             Func<TValue> fallback, DistributedCacheEntryOptions options = default) where TValue : class
         {
             var cached = cache.Get(key);
@@ -24,7 +24,7 @@ namespace SimpleConcepts.Extensions.Caching.Distributed
             return value;
         }
 
-        public static async Task<TValue> GetAsync<TKey, TValue>(this IDistributedCache<TKey, TValue> cache, TKey key,
+        public static async Task<TValue> GetAsync<TKey, TValue>(this ISimpleCache<TKey, TValue> cache, TKey key,
             Func<Task<TValue>> fallbackAsync, DistributedCacheEntryOptions options = default,
             CancellationToken token = default) where TValue : class
         {
