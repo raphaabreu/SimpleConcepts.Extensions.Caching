@@ -7,6 +7,7 @@ namespace Microsoft.Extensions.Caching.Distributed
 {
     public static class MicrosoftDistributedCacheFallbackExtensions
     {
+
         public static byte[] Get(this IDistributedCache cache, string key, Func<byte[]> fallback, DistributedCacheEntryOptions options)
         {
             var cached = cache.Get(key);

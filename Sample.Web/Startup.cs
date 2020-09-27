@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,10 +26,15 @@ namespace Sample.Web
 
             services.ConfigureDistributedCacheKeySpace("teste");
 
+            services.AddSimpleCache<IEnumerable<WeatherForecast>>();
+
             services.AddSimpleCache<Guid, WeatherForecast>();
             services.AddSimpleCache<Guid, WeatherForecast>("custom-1", opt => opt
                 .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
-                .WithKeyPrefix("teste"));
+                .WithKeyPrefix("teste1"));
+            services.AddSimpleCache<Guid, WeatherForecast>("custom-2", opt => opt
+                .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
+                .WithKeyPrefix("teste2"));
 
             services.AddSimpleCache<Guid, WeatherForecast>(opt => opt.WithKeyPrefix("teste2"));
         }

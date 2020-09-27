@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
 
 namespace SimpleConcepts.Extensions.Caching
 {
@@ -12,12 +11,12 @@ namespace SimpleConcepts.Extensions.Caching
         private readonly IValueSerializer _valueSerializer;
         private readonly DistributedCacheEntryOptions _defaultEntryOptions;
 
-        public SimpleCache(IDistributedCache cache, IOptions<SimpleCacheOptions> options)
+        public SimpleCache(IDistributedCache cache, SimpleCacheOptions options)
         {
             _cache = cache;
-            _key = options.Value.KeySpace ?? typeof(TValue).FullName;
-            _valueSerializer = options.Value.ValueSerializer ?? new JsonValueSerializer();
-            _defaultEntryOptions = options.Value.DefaultEntryOptions ?? new DistributedCacheEntryOptions();
+            _key = options.KeySpace ?? typeof(TValue).FullName;
+            _valueSerializer = options.ValueSerializer ?? new JsonValueSerializer();
+            _defaultEntryOptions = options.DefaultEntryOptions ?? new DistributedCacheEntryOptions();
         }
 
         public TValue Get()
