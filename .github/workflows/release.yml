@@ -3,8 +3,6 @@ name: .NET Core
 on:
   release:
     types: [published]
-#  push:
-#    branches: [ master ]
 
 jobs:
   release:
