@@ -31,6 +31,6 @@ jobs:
     - name: Test with dotnet
       run: dotnet test --no-restore
     - name: Pack with dotnet
-      run: dotnet pack -c Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      run: dotnet pack -c Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
     - name: Push with dotnet
       run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
