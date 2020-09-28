@@ -15,12 +15,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-#    - name: Install dependencies
-#      run: dotnet restore
-#    - name: Build
-#      run: dotnet build --configuration Release --no-restore
-#    - name: Test
-#      run: dotnet test --no-restore --verbosity normal
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
 #    - name: Create NuGet Package
 #      run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleaseNotes="See https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}"
 #    - name: Publish Nuget Package
@@ -29,7 +29,7 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         # Filepath of the project to be packaged, relative to root of repository
-        PROJECT_FILE_PATH: SimpleConcepts.Extensions.Caching/SimpleConcepts.Extensions.Caching/SimpleConcepts.Extensions.Caching.csproj
+        PROJECT_FILE_PATH: SimpleConcepts.Extensions.Caching/SimpleConcepts.Extensions.Caching.csproj
         # NuGet package id, used for version detection & defaults to project name
         #PACKAGE_NAME: # optional
         # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
