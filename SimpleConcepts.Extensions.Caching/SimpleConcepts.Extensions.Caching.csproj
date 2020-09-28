@@ -6,11 +6,11 @@
     <RootNamespace>SimpleConcepts.Extensions.Caching</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Description>A simple typed dictionary abstraction built on top of IDistributedCache that handle custom key namespaces, serialization and default configurable cache entry options.</Description>
+    <Description>Extensions that add logging, key partitioning and Json object serialization to IDistributedCache.</Description>
     <RepositoryUrl>https://github.com/raphaabreu/SimpleConcepts.Extensions.Caching</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageProjectUrl>https://github.com/raphaabreu/SimpleConcepts.Extensions.Caching</PackageProjectUrl>
-    <PackageTags>simpleconcepts extensions distributed cache</PackageTags>
+    <PackageTags>simpleconcepts extensions distributed cache IDistributedCache logging json serialization partitioning</PackageTags>
     <Copyright>MIT</Copyright>
     <Version>1.0.0</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
