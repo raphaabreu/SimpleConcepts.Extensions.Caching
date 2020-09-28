@@ -33,12 +33,17 @@ jobs:
     - name: Test with dotnet
       run: dotnet test --no-restore
     - name: Pack with dotnet
-      run: dotnet pack -c Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nuget-packages
+      run: dotnet pack -c Release -p:Version=${{ steps.gitversion.outputs.nuGetVersionV2 }} --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nuget-packages
     - name: Push with dotnet
       run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
     - name: Archive packages
       uses: actions/upload-artifact@v2.1.4
       with:
-        name: Packages
-        path: nuget-packages/*
+        name: packages
+        path: nuget-packages/*.nupkg
+    - name: Archive symbols
+      uses: actions/upload-artifact@v2.1.4
+      with:
+        name: symbols
+        path: nuget-packages/*.snupkg
 
