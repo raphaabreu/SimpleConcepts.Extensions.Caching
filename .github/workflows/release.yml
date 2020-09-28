@@ -36,13 +36,21 @@ jobs:
       run: dotnet pack -c Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nuget-packages
     - name: Push with dotnet
       run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
-    - name: Archive package
+    - name: Archive packages
       uses: actions/upload-artifact@v2.1.4
       with:
-        name: SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
-        path: nuget-packages/SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
-    - name: Archive symbols package
-      uses: actions/upload-artifact@v2.1.4
+        name: Packages
+        path: nuget-packages/*
+    - name: Upload package release asset
+      uses: actions/upload-release-asset@v1.0.2
       with:
-        name: SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.snupkg
-        path: nuget-packages/SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.snupkg
+        asset_path: SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
+        asset_name: SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
+        asset_content_type: application/zip
+    - name: Upload symbols package release asset
+      uses: actions/upload-release-asset@v1.0.2
+      with:
+        asset_path: SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.snupkg
+        asset_name: SimpleConcepts.Extensions.Caching.${{ steps.gitversion.outputs.nuGetVersionV2 }}.snupkg
+        asset_content_type: application/zip
+
