@@ -4,7 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Raphael Lorenzeto de Abreu</Authors>
     <RootNamespace>SimpleConcepts.Extensions.Caching</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Extensions that add logging, key partitioning and Json object serialization to IDistributedCache.</Description>
     <RepositoryUrl>https://github.com/raphaabreu/SimpleConcepts.Extensions.Caching</RepositoryUrl>
