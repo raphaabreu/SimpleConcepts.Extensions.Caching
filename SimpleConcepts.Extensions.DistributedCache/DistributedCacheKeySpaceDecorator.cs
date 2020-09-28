@@ -10,9 +10,9 @@ namespace SimpleConcepts.Extensions.Caching
         private readonly string _prefix;
         private readonly IDistributedCache _cache;
 
-        public DistributedCacheKeySpaceDecorator(IOptions<DistributedCacheKeySpaceOptions> options, IDistributedCache cache)
+        public DistributedCacheKeySpaceDecorator(IDistributedCache cache, IOptions<DistributedCacheKeySpaceOptions> options)
         {
-            _prefix = options.Value.KeySpace;
+            _prefix = options.Value.KeySpace ?? string.Empty;
             _cache = cache;
         }
 

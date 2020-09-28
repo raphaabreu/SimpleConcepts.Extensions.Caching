@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection ConfigureDistributedCacheKeySpace(this IServiceCollection services, string keySpace)
         {
-            services.ConfigureDistributedCacheKeySpace(opt => opt.KeySpace = keySpace);
+            services.ConfigureDistributedCacheKeySpace(opt => opt.KeySpace = keySpace + ":");
 
             return services;
         }

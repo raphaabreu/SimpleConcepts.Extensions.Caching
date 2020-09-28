@@ -5,16 +5,16 @@ namespace SimpleConcepts.Extensions.Caching
 {
     public class JsonValueSerializer : IValueSerializer
     {
-        public JsonSerializerOptions Options { get; set; }
+        public JsonSerializerOptions? Options { get; set; }
 
-        public byte[] Serialize(object value)
+        public byte[]? Serialize(object? value)
         {
-            return JsonSerializer.SerializeToUtf8Bytes(value, Options);
+            return value == null ? null : JsonSerializer.SerializeToUtf8Bytes(value, Options);
         }
 
-        public object Deserialize(byte[] bytes, Type type)
+        public object? Deserialize(byte[]? bytes, Type type)
         {
-            return JsonSerializer.Deserialize(bytes, type, Options);
+            return bytes == null ? null : JsonSerializer.Deserialize(bytes, type, Options);
         }
     }
 }

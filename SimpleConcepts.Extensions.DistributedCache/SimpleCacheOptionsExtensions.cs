@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static SimpleCacheOptions WithKeyPrefix(this SimpleCacheOptions options, string keyPrefix)
         {
-            options.KeySpace = keyPrefix;
+            options.KeySpace = keyPrefix + ":";
 
             return options;
         }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DateTime = System.DateTime;
 
 namespace Sample.Web
 {
@@ -22,21 +23,24 @@ namespace Sample.Web
         {
             services.AddControllers();
 
+            // Add in memory cache for testing.
             services.AddDistributedMemoryCache();
 
-            services.ConfigureDistributedCacheKeySpace("teste");
+            // Add logging to all IDistributedCache operations.
+            services.AddDistributedCacheLogging();
 
-            services.AddSimpleCache<IEnumerable<WeatherForecast>>();
+            // Configure global key space partitioning to avoid key collisions with other microservices.
+            services.ConfigureDistributedCacheKeySpace("weather-forecast-service");
 
-            services.AddSimpleCache<Guid, WeatherForecast>();
-            services.AddSimpleCache<Guid, WeatherForecast>("custom-1", opt => opt
-                .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
-                .WithKeyPrefix("teste1"));
-            services.AddSimpleCache<Guid, WeatherForecast>("custom-2", opt => opt
-                .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
-                .WithKeyPrefix("teste2"));
+            // Add SimpleCache for the controller response.
+            services.AddSimpleCache<IEnumerable<WeatherForecast>>(opt => opt
+                .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromSeconds(5))
+            );
 
-            services.AddSimpleCache<Guid, WeatherForecast>(opt => opt.WithKeyPrefix("teste2"));
+            // Add SimpleCache for individual forecasts.
+            services.AddSimpleCache<DateTime, WeatherForecast>(opt => opt
+                .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromSeconds(15))
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

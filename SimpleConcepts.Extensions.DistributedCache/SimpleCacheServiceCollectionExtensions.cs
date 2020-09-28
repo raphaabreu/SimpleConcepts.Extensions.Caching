@@ -15,21 +15,21 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddSimpleCache<TValue>(this IServiceCollection services)
+        public static IServiceCollection AddSimpleCache<TValue>(this IServiceCollection services) where TValue : class
         {
             services.AddSimpleCache<TValue>(Options.Options.DefaultName, opt => { });
 
             return services;
         }
 
-        public static IServiceCollection AddSimpleCache<TValue>(this IServiceCollection services, Action<SimpleCacheOptions> configureOptions)
+        public static IServiceCollection AddSimpleCache<TValue>(this IServiceCollection services, Action<SimpleCacheOptions> configureOptions) where TValue : class
         {
             services.AddSimpleCache<TValue>(Options.Options.DefaultName, configureOptions);
 
             return services;
         }
 
-        public static IServiceCollection AddSimpleCache<TValue>(this IServiceCollection services, string name, Action<SimpleCacheOptions> configureOptions)
+        public static IServiceCollection AddSimpleCache<TValue>(this IServiceCollection services, string name, Action<SimpleCacheOptions> configureOptions) where TValue : class
         {
             services.AddSimpleCache();
 
@@ -40,21 +40,21 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddSimpleCache<TKey, TValue>(this IServiceCollection services)
+        public static IServiceCollection AddSimpleCache<TKey, TValue>(this IServiceCollection services) where TValue : class
         {
             services.AddSimpleCache<TKey, TValue>(Options.Options.DefaultName, opt => { });
 
             return services;
         }
 
-        public static IServiceCollection AddSimpleCache<TKey, TValue>(this IServiceCollection services, Action<SimpleCacheOptions> configureOptions)
+        public static IServiceCollection AddSimpleCache<TKey, TValue>(this IServiceCollection services, Action<SimpleCacheOptions> configureOptions) where TValue : class
         {
             services.AddSimpleCache<TKey, TValue>(Options.Options.DefaultName, configureOptions);
 
             return services;
         }
 
-        public static IServiceCollection AddSimpleCache<TKey, TValue>(this IServiceCollection services, string name, Action<SimpleCacheOptions> configureOptions)
+        public static IServiceCollection AddSimpleCache<TKey, TValue>(this IServiceCollection services, string name, Action<SimpleCacheOptions> configureOptions) where TValue : class
         {
             services.AddSimpleCache();
 

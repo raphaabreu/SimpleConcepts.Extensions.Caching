@@ -4,7 +4,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace SimpleConcepts.Extensions.Caching
 {
-    public class SimpleCache<TValue> : ISimpleCache<TValue>
+    public class SimpleCache<TValue> : ISimpleCache<TValue> where TValue : class
     {
         private readonly IDistributedCache _cache;
         private readonly string _key;
@@ -19,38 +19,23 @@ namespace SimpleConcepts.Extensions.Caching
             _defaultEntryOptions = options.DefaultEntryOptions ?? new DistributedCacheEntryOptions();
         }
 
-        public TValue Get()
-        {
-            var bytes = _cache.Get(_key);
-
-            return DeserializeValue(bytes);
-        }
-
-        public async Task<TValue> GetAsync(CancellationToken token = default)
+        public async Task<TValue?> GetAsync(CancellationToken token = default)
         {
             var bytes = await _cache.GetAsync(_key, token);
 
-            return DeserializeValue(bytes);
+            return (TValue?)_valueSerializer.Deserialize(bytes, typeof(TValue));
         }
 
-        public void Set(TValue value, DistributedCacheEntryOptions options = default)
+        public Task SetAsync(TValue value, CancellationToken token = default)
         {
-            var bytes = SerializeValue(value);
-
-            _cache.Set(_key, bytes, options ?? _defaultEntryOptions);
+            return SetAsync(value, _defaultEntryOptions, token);
         }
 
-        public Task SetAsync(TValue value, DistributedCacheEntryOptions options = default,
-            CancellationToken token = default)
+        public Task SetAsync(TValue value, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
-            var bytes = SerializeValue(value);
+            var bytes = _valueSerializer.Serialize(value);
 
-            return _cache.SetAsync(_key, bytes, options ?? _defaultEntryOptions, token);
-        }
-
-        public void Refresh()
-        {
-            _cache.Refresh(_key);
+            return _cache.SetAsync(_key, bytes, options, token);
         }
 
         public Task RefreshAsync(CancellationToken token = default)
@@ -58,24 +43,9 @@ namespace SimpleConcepts.Extensions.Caching
             return _cache.RefreshAsync(_key, token);
         }
 
-        public void Remove()
-        {
-            _cache.Remove(_key);
-        }
-
         public Task RemoveAsync(CancellationToken token = default)
         {
             return _cache.RemoveAsync(_key, token);
-        }
-
-        private byte[] SerializeValue(TValue value)
-        {
-            return _valueSerializer.Serialize(value);
-        }
-
-        private TValue DeserializeValue(byte[] value)
-        {
-            return (TValue)_valueSerializer.Deserialize(value, typeof(TValue));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SimpleConcepts.Extensions.Caching
             _optionsMonitor = optionsMonitor;
         }
 
-        public ISimpleCache<TValue> Create<TValue>()
+        public ISimpleCache<TValue> Create<TValue>() where TValue : class
         {
             var opts = _optionsMonitor.Get(GetOptionsName<TValue>());
             var cache = _provider.GetRequiredService<IDistributedCache>();
@@ -24,7 +24,7 @@ namespace SimpleConcepts.Extensions.Caching
             return new SimpleCache<TValue>(cache, opts);
         }
 
-        public ISimpleCache<TValue> Create<TValue>(string name)
+        public ISimpleCache<TValue> Create<TValue>(string name) where TValue : class
         {
             var opts = _optionsMonitor.Get(GetOptionsName<TValue>(name));
             var cache = _provider.GetRequiredService<IDistributedCache>();
@@ -32,7 +32,7 @@ namespace SimpleConcepts.Extensions.Caching
             return new SimpleCache<TValue>(cache, opts);
         }
 
-        public ISimpleCache<TKey, TValue> Create<TKey, TValue>()
+        public ISimpleCache<TKey, TValue> Create<TKey, TValue>() where TValue : class
         {
             var opts = _optionsMonitor.Get(GetOptionsName<TKey, TValue>());
             var cache = _provider.GetRequiredService<IDistributedCache>();
@@ -40,7 +40,7 @@ namespace SimpleConcepts.Extensions.Caching
             return new SimpleCache<TKey, TValue>(cache, opts);
         }
 
-        public ISimpleCache<TKey, TValue> Create<TKey, TValue>(string name)
+        public ISimpleCache<TKey, TValue> Create<TKey, TValue>(string name) where TValue : class
         {
             var opts = _optionsMonitor.Get(GetOptionsName<TKey, TValue>(name));
             var cache = _provider.GetRequiredService<IDistributedCache>();

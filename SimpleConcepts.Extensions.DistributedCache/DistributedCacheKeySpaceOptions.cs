@@ -2,6 +2,6 @@
 {
     public class DistributedCacheKeySpaceOptions
     {
-        public string KeySpace { get; set; }
+        public string? KeySpace { get; set; }
     }
 }
