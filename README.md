@@ -104,6 +104,12 @@ The `ISimpleCache` interface and concrete types combine the extensions mentioned
 
 The interface comes in two versions: `ISimpleCache<TKey, TValue>` and `ISimpleCache<TValue>`. The first is the most common usage cenario where you want to lookup values by a given key, the second is specific for cases where you have only a single value to be stored.
 
+By default, it will:
+* Serialize and deserialize `TValue` using `System.Text.Json`.
+* Serialize the `TKey` with `key.ToString()`.
+* Prefix all keys with `typeof(TValue).FullName + ":"`.
+* Have entries that do not expire.
+
 To use it, register the service:
 
 ```csharp
@@ -113,6 +119,7 @@ services.AddSimpleCache<Guid, WeatherForecast>();
 // With custom options
 services.AddSimpleCache<Guid, WeatherForecast>(opt => opt
     .WithKeyPrefix("weather-forecast")
+    // Set custom expiration options
     .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromHours(1))
 );
 ```
@@ -120,15 +127,37 @@ services.AddSimpleCache<Guid, WeatherForecast>(opt => opt
 Then, inject the interface where you need it:
 
 ```csharp
+public WeatherForecastController(ISimpleCache<DateTime, WeatherForecast> _dailyForecastCache)
+{
+    __dailyForecastCache = _dailyForecastCache;
+}
 
+private async Task<IEnumerable<WeatherForecast>> FetchAllForecastsAsync(CancellationToken cancellationToken)
+{
+    var forecasts = new List<WeatherForecast>();
+
+    for (var index = 1; index < 5; index++)
+    {
+        var date = DateTime.Now.Date.AddDays(index);
+
+        // Get cached daily forecast if it exists and fetch if not.
+        var forecast = await _dailyForecastCache
+            .GetOrFetchAsync(date, () => FetchSingleForecastAsync(date, cancellationToken), cancellationToken);
+
+        forecasts.Add(forecast);
+    }
+
+    return forecasts.AsEnumerable();
+}
+
+private async Task<WeatherForecast> FetchSingleForecastAsync(DateTime date, CancellationToken cancellationToken)
+{
+    // Logic for fetching key missing from cache
+    // ...
+}
 ```
 
-Default options:
-* Values will be serialized/deserialized using `System.Text.Json`.
-* Keys will be serialized using `key.ToString()`.
-* All keys will be prefixed with `typeof(TValue).FullName + ":"`.
-* Entries will not have an expiration set.
-
+That is it.
 
 # --
 A simple typed dictionary abstraction built on top of IDistributedCache that handle custom key namespaces, serialization and default configurable cache entry options.
