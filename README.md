@@ -4,10 +4,14 @@ This project provides caching related logic that is common to several of the pro
 
 ## Installation
 
-Package manager console
-
+With package Manager:
 ```
 Install-Package SimpleConcepts.Extensions.Caching
+```
+
+With .NET CLI:
+```
+dotnet add package SimpleConcepts.Extensions.Caching
 ```
 
 ## Use cases
