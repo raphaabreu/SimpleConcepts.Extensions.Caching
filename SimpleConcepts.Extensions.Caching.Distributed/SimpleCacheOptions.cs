@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 
-namespace SimpleConcepts.Extensions.Caching
+namespace SimpleConcepts.Extensions.Caching.Distributed
 {
     public class SimpleCacheOptions
     {

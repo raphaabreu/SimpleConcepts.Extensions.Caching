@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using SimpleConcepts.Extensions.Caching;
+using SimpleConcepts.Extensions.Caching.Distributed;
 
 namespace Sample.Web.Controllers
 {

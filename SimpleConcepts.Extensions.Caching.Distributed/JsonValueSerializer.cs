@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 
-namespace SimpleConcepts.Extensions.Caching
+namespace SimpleConcepts.Extensions.Caching.Distributed
 {
     public class JsonValueSerializer : IValueSerializer
     {

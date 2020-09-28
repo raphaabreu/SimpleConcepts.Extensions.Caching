@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Raphael Lorenzeto de Abreu</Authors>
-    <RootNamespace>SimpleConcepts.Extensions.Caching</RootNamespace>
+    <RootNamespace>SimpleConcepts.Extensions.Caching.Distributed</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>A simple typed dictionary abstraction built on top of IDistributedCache that handle custom key namespaces, serialization and default configurable cache entry options.</Description>

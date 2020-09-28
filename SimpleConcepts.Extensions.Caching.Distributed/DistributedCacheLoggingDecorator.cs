@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
-namespace SimpleConcepts.Extensions.Caching
+namespace SimpleConcepts.Extensions.Caching.Distributed
 {
     public class DistributedCacheLoggingDecorator : IDistributedCache
     {

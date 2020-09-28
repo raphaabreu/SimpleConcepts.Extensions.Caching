@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleConcepts.Extensions.DistributedCache\SimpleConcepts.Extensions.Caching.csproj" />
+    <ProjectReference Include="..\SimpleConcepts.Extensions.Caching.Distributed\SimpleConcepts.Extensions.Caching.Distributed.csproj" />
   </ItemGroup>
 
 </Project>

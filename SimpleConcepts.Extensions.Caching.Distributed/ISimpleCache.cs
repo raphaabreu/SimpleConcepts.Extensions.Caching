@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace SimpleConcepts.Extensions.Caching
+namespace SimpleConcepts.Extensions.Caching.Distributed
 {
     public interface ISimpleCache<TValue> where TValue : class
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleConcepts.Extensions.Caching
+namespace SimpleConcepts.Extensions.Caching.Distributed
 {
     public interface IValueSerializer
     {
