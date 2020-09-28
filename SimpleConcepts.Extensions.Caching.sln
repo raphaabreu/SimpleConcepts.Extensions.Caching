@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching.Distributed.Tests", "SimpleConcepts.Extensions.Caching.Distributed.Tests\SimpleConcepts.Extensions.Caching.Distributed.Tests.csproj", "{A0B92D7E-A88E-4115-A569-25ACE8481F68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching.Tests", "SimpleConcepts.Extensions.Caching.Tests\SimpleConcepts.Extensions.Caching.Tests.csproj", "{A0B92D7E-A88E-4115-A569-25ACE8481F68}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching.Distributed", "SimpleConcepts.Extensions.Caching.Distributed\SimpleConcepts.Extensions.Caching.Distributed.csproj", "{531D00D9-92C6-4E94-92CB-E94B97E45335}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching", "SimpleConcepts.Extensions.Caching\SimpleConcepts.Extensions.Caching.csproj", "{531D00D9-92C6-4E94-92CB-E94B97E45335}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Web", "Sample.Web\Sample.Web.csproj", "{270D3C88-0150-45AD-B263-F7154ABAF3A9}"
 EndProject

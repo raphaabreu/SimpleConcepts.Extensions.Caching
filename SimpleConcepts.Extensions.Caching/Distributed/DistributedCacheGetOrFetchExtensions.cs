@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Caching.Distributed
 {
-    public static class MicrosoftDistributedCacheGetOrFetchExtensions
+    public static class DistributedCacheGetOrFetchExtensions
     {
         public static byte[] GetOrFetch(this IDistributedCache cache, string key, Func<byte[]> fetchCallback)
         {

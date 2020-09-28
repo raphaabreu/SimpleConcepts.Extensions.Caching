@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SimpleConcepts.Extensions.Caching.Distributed;
+using SimpleConcepts.Extensions.Caching;
 
 namespace Sample.Web.Controllers
 {

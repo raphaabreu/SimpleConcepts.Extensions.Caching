@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Caching.Distributed
 {
-    public static class MicrosoftDistributedCacheJsonExtensions
+    public static class DistributedCacheJsonExtensions
     {
         public static T GetJsonObject<T>(this IDistributedCache cache, string key)
         {

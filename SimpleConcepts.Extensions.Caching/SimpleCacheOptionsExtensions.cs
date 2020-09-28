@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Caching.Distributed;
-using SimpleConcepts.Extensions.Caching.Distributed;
+using SimpleConcepts.Extensions.Caching;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection

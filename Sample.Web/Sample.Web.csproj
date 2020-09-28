@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleConcepts.Extensions.Caching.Distributed\SimpleConcepts.Extensions.Caching.Distributed.csproj" />
+    <ProjectReference Include="..\SimpleConcepts.Extensions.Caching\SimpleConcepts.Extensions.Caching.csproj" />
   </ItemGroup>
 
 

@@ -1,4 +1,4 @@
-namespace SimpleConcepts.Extensions.Caching.Distributed.Tests
+namespace SimpleConcepts.Extensions.Caching.Tests
 {
     public class TestPerson
     {

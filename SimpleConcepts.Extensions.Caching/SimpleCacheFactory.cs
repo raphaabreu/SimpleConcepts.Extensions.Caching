@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace SimpleConcepts.Extensions.Caching.Distributed
+namespace SimpleConcepts.Extensions.Caching
 {
     public class SimpleCacheFactory : ISimpleCacheFactory
     {

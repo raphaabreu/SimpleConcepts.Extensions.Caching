@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace SimpleConcepts.Extensions.Caching.Distributed
+namespace SimpleConcepts.Extensions.Caching
 {
     public static class SimpleCacheGetOrFetchExtensions
     {
