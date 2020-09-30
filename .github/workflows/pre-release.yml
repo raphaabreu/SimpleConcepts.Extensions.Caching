@@ -43,7 +43,7 @@ jobs:
       with:
         name: symbols
         path: nuget-packages/*.snupkg
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - uses: "marvinpinto/action-automatic-releases@v1.1.0"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"

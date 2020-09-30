@@ -1,14 +1,13 @@
-name: .NET Core
+name: "tagged-release"
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*"
 
 jobs:
-  release:
-
+  tagged-release:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Fetch all history for all tags and branches
@@ -21,7 +20,7 @@ jobs:
       id: gitversion
       uses: gittools/actions/gitversion/execute@v0.9
     - run: |
-        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.NuGetVersionV2 }}"
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
     - name: Install dependencies
@@ -31,9 +30,9 @@ jobs:
     - name: Test with dotnet
       run: dotnet test --no-restore
     - name: Pack with dotnet
-      run: dotnet pack -c Release -p:Version=${{ steps.gitversion.outputs.nuGetVersionV2 }} --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nuget-packages
-    - name: Push with dotnet
-      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
+      run: dotnet pack -c Release -p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }} --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nuget-packages
+#    - name: Push with dotnet
+#      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
     - name: Archive packages
       uses: actions/upload-artifact@v2.1.4
       with:
@@ -44,4 +43,12 @@ jobs:
       with:
         name: symbols
         path: nuget-packages/*.snupkg
-
+    - uses: "marvinpinto/action-automatic-releases@v1.1.0"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        title: v${{ steps.gitversion.outputs.NuGetVersionV2 }}
+        files: |
+          LICENSE
+          nuget-packages/*.nupkg
+          nuget-packages/*.snupkg

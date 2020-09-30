@@ -1,1 +1,2 @@
 mode: ContinuousDeployment
+continuous-delivery-fallback-tag: alpha
