@@ -5,11 +5,11 @@
     <Authors>Raphael Lorenzeto de Abreu</Authors>
     <RootNamespace>SimpleConcepts.Extensions.Caching</RootNamespace>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Description>Extensions that add logging, key partitioning and Json object serialization to IDistributedCache.</Description>
+    <Description>This package provides several extensions that make working with IDistributedCache easier including Json object serialization, get with fallback, key space partitioning and logging. In addition to these extensions there is also a strongly typed ISimpleCache&lt;TKey, TValue&gt; interface that provides a dependency injection friendly and fully customizable wrapper for IDistributedCache.</Description>
     <RepositoryUrl>https://github.com/raphaabreu/SimpleConcepts.Extensions.Caching</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageProjectUrl>https://github.com/raphaabreu/SimpleConcepts.Extensions.Caching</PackageProjectUrl>
-    <PackageTags>simpleconcepts extensions distributed cache IDistributedCache logging json serialization partitioning</PackageTags>
+    <PackageTags>simpleconcepts extensions distributed cache IDistributedCache logging json serialization partitioning fallback strongly typed key space</PackageTags>
     <Copyright>MIT</Copyright>
     <Version>1.0.0</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
