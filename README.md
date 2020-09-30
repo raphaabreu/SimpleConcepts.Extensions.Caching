@@ -14,6 +14,10 @@ With .NET CLI:
 dotnet add package SimpleConcepts.Extensions.Caching
 ```
 
+## Samples
+
+Check the included project in Sample.Web to see a general purpose implementation.
+
 ## Use cases
 
 #### Json object serialization
