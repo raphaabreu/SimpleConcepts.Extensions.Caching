@@ -37,7 +37,7 @@ namespace Sample.Web.Controllers
         {
             // Will get cached response if there is any and fetch otherwise.
             var response = await _distributedCache
-                .GetOrFetchJsonObjectAsync("WeatherForecastController_Get",
+                .GetOrSetJsonObjectAsync("WeatherForecastController_Get",
                     () => FetchAllForecastsAsync(cancellationToken),
                     new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(5) },
                     cancellationToken);
@@ -55,7 +55,7 @@ namespace Sample.Web.Controllers
 
                 // Get cached daily forecast if it exists and fetch if not.
                 var forecast = await _distributedCache
-                    .GetOrFetchJsonObjectAsync($"single-weather-forecast:{date.ToShortDateString()}",
+                    .GetOrSetJsonObjectAsync($"single-weather-forecast:{date.ToShortDateString()}",
                         () => FetchSingleForecastAsync(date, cancellationToken),
                         new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(15) },
                         cancellationToken);

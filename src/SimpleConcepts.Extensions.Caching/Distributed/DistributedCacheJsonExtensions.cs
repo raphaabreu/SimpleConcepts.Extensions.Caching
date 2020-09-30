@@ -84,12 +84,12 @@ namespace Microsoft.Extensions.Caching.Distributed
         }
 
 
-        public static T GetOrFetchJsonObject<T>(this IDistributedCache cache, string key, Func<T> fetchCallback) where T : class
+        public static T GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T> valueFactory) where T : class
         {
-            return cache.GetOrFetchJsonObject(key, fetchCallback, new DistributedCacheEntryOptions());
+            return cache.GetOrSetJsonObject(key, valueFactory, new DistributedCacheEntryOptions());
         }
 
-        public static T GetOrFetchJsonObject<T>(this IDistributedCache cache, string key, Func<T> fetchCallback,
+        public static T GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T> valueFactory,
             DistributedCacheEntryOptions options) where T : class
         {
             var cached = cache.GetJsonObject<T>(key);
@@ -99,21 +99,21 @@ namespace Microsoft.Extensions.Caching.Distributed
                 return cached;
             }
 
-            var value = fetchCallback();
+            var value = valueFactory();
 
             cache.SetJsonObject(key, value, options);
 
             return value;
         }
 
-        public static Task<T> GetOrFetchJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> fetchCallback, CancellationToken token = default) where T : class
+        public static Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T>> valueFactory, CancellationToken token = default) where T : class
         {
-            return cache.GetOrFetchJsonObjectAsync(key, fetchCallback, new DistributedCacheEntryOptions(), token);
+            return cache.GetOrSetJsonObjectAsync(key, valueFactory, new DistributedCacheEntryOptions(), token);
         }
 
-        public static async Task<T> GetOrFetchJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> fetchCallback, DistributedCacheEntryOptions options, CancellationToken token = default) where T : class
+        public static async Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T>> valueFactory, DistributedCacheEntryOptions options, CancellationToken token = default) where T : class
         {
             var cached = await cache.GetJsonObjectAsync<T>(key, token);
 
@@ -122,7 +122,7 @@ namespace Microsoft.Extensions.Caching.Distributed
                 return cached;
             }
 
-            var value = await fetchCallback();
+            var value = await valueFactory();
 
             await cache.SetJsonObjectAsync(key, value, options, token);
 

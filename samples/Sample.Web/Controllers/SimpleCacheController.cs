@@ -40,7 +40,7 @@ namespace Sample.Web.Controllers
         {
             // Will get cached response if there is any and fetch otherwise.
             var response = await _responseCache
-                .GetOrFetchAsync(() => FetchAllForecastsAsync(cancellationToken), cancellationToken);
+                .GetOrSetAsync(() => FetchAllForecastsAsync(cancellationToken), cancellationToken);
 
             return response;
         }
@@ -55,7 +55,7 @@ namespace Sample.Web.Controllers
 
                 // Get cached daily forecast if it exists and fetch if not.
                 var forecast = await _dailyForecastCache
-                    .GetOrFetchAsync(date, () => FetchSingleForecastAsync(date, cancellationToken), cancellationToken);
+                    .GetOrSetAsync(date, () => FetchSingleForecastAsync(date, cancellationToken), cancellationToken);
 
                 forecasts.Add(forecast);
             }

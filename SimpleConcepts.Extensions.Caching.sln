@@ -3,16 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching.Tests", "SimpleConcepts.Extensions.Caching.Tests\SimpleConcepts.Extensions.Caching.Tests.csproj", "{A0B92D7E-A88E-4115-A569-25ACE8481F68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching.Tests", "tests\SimpleConcepts.Extensions.Caching.Tests\SimpleConcepts.Extensions.Caching.Tests.csproj", "{A0B92D7E-A88E-4115-A569-25ACE8481F68}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching", "SimpleConcepts.Extensions.Caching\SimpleConcepts.Extensions.Caching.csproj", "{531D00D9-92C6-4E94-92CB-E94B97E45335}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConcepts.Extensions.Caching", "src\SimpleConcepts.Extensions.Caching\SimpleConcepts.Extensions.Caching.csproj", "{531D00D9-92C6-4E94-92CB-E94B97E45335}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Web", "Sample.Web\Sample.Web.csproj", "{270D3C88-0150-45AD-B263-F7154ABAF3A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Web", "samples\Sample.Web\Sample.Web.csproj", "{270D3C88-0150-45AD-B263-F7154ABAF3A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{86BBB450-4870-4E89-B948-453A93B4D217}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{E009AB93-C201-45BD-B4BB-F450F55F112F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{56462026-DB0C-4F3A-A4E9-185C32C9BA95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B1B8FE9E-ABDC-4B31-B535-1D88E04DECCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A0B92D7E-A88E-4115-A569-25ACE8481F68} = {B1B8FE9E-ABDC-4B31-B535-1D88E04DECCE}
+		{531D00D9-92C6-4E94-92CB-E94B97E45335} = {56462026-DB0C-4F3A-A4E9-185C32C9BA95}
+		{270D3C88-0150-45AD-B263-F7154ABAF3A9} = {E009AB93-C201-45BD-B4BB-F450F55F112F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15C770B8-637D-429B-ACAC-7E6058EE356C}

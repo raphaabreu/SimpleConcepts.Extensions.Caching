@@ -5,10 +5,10 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace SimpleConcepts.Extensions.Caching
 {
-    public static class SimpleCacheGetOrFetchExtensions
+    public static class SimpleCacheGetOrSetExtensions
     {
-        public static async Task<TValue> GetOrFetchAsync<TValue>(this ISimpleCache<TValue> cache,
-            Func<Task<TValue>> fetchCallback, CancellationToken token = default) where TValue : class
+        public static async Task<TValue> GetOrSetAsync<TValue>(this ISimpleCache<TValue> cache,
+            Func<Task<TValue>> valueFactory, CancellationToken token = default) where TValue : class
         {
             var cached = await cache.GetAsync(token);
 
@@ -17,15 +17,15 @@ namespace SimpleConcepts.Extensions.Caching
                 return cached;
             }
 
-            var value = await fetchCallback();
+            var value = await valueFactory();
 
             await cache.SetAsync(value, token);
 
             return value;
         }
 
-        public static async Task<TValue> GetOrFetchAsync<TValue>(this ISimpleCache<TValue> cache,
-            Func<Task<TValue>> fetchCallback, DistributedCacheEntryOptions options,
+        public static async Task<TValue> GetOrSetAsync<TValue>(this ISimpleCache<TValue> cache,
+            Func<Task<TValue>> valueFactory, DistributedCacheEntryOptions options,
             CancellationToken token = default) where TValue : class
         {
             var cached = await cache.GetAsync(token);
@@ -35,15 +35,15 @@ namespace SimpleConcepts.Extensions.Caching
                 return cached;
             }
 
-            var value = await fetchCallback();
+            var value = await valueFactory();
 
             await cache.SetAsync(value, options, token);
 
             return value;
         }
 
-        public static async Task<TValue> GetOrFetchAsync<TKey, TValue>(this ISimpleCache<TKey, TValue> cache, TKey key,
-            Func<Task<TValue>> fetchCallback, CancellationToken token = default) where TValue : class
+        public static async Task<TValue> GetOrSetAsync<TKey, TValue>(this ISimpleCache<TKey, TValue> cache, TKey key,
+            Func<Task<TValue>> valueFactory, CancellationToken token = default) where TValue : class
         {
             var cached = await cache.GetAsync(key, token);
 
@@ -52,15 +52,15 @@ namespace SimpleConcepts.Extensions.Caching
                 return cached;
             }
 
-            var value = await fetchCallback();
+            var value = await valueFactory();
 
             await cache.SetAsync(key, value, token);
 
             return value;
         }
 
-        public static async Task<TValue> GetOrFetchAsync<TKey, TValue>(this ISimpleCache<TKey, TValue> cache, TKey key,
-            Func<Task<TValue>> fetchCallback, DistributedCacheEntryOptions options,
+        public static async Task<TValue> GetOrSetAsync<TKey, TValue>(this ISimpleCache<TKey, TValue> cache, TKey key,
+            Func<Task<TValue>> valueFactory, DistributedCacheEntryOptions options,
             CancellationToken token = default) where TValue : class
         {
             var cached = await cache.GetAsync(key, token);
@@ -70,7 +70,7 @@ namespace SimpleConcepts.Extensions.Caching
                 return cached;
             }
 
-            var value = await fetchCallback();
+            var value = await valueFactory();
 
             await cache.SetAsync(key, value, options, token);
 

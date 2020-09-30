@@ -1,6 +1,8 @@
 # SimpleConcepts.Extensions.Caching
 
-This project provides caching related logic that is common to several of the projects that I have been a part of.
+This package provides several extensions that make working with `IDistributedCache` easier, including Json object serialization, get with fallback, key space partitioning and logging. In addition to these extensions there is also a strongly typed `ISimpleCache<TKey, TValue>` interface that provides a dependency injection friendly and fully customizable wrapper for `IDistributedCache.`
+
+Check the included project in `samples` to see a general purpose implementation.
 
 ## Installation
 
@@ -14,11 +16,7 @@ With .NET CLI:
 dotnet add package SimpleConcepts.Extensions.Caching
 ```
 
-## Samples
-
-Check the included project in Sample.Web to see a general purpose implementation.
-
-## Use cases
+## Extensions
 
 #### Json object serialization
 
@@ -69,7 +67,7 @@ This exemple can be rewritten in a single line:
 ```csharp
 public static Task<Person> GetFromCacheOrFetchAsync(Guid personId)
 {
-    return cache.GetOrFetchJsonObjectAsync($"person:{personId}", 
+    return cache.GetOrSetJsonObjectAsync($"person:{personId}", 
         () => _personService.FetchAsync(personId), cacheEntryOptions);
 }
 ```
@@ -108,11 +106,11 @@ All operations are logged with `Debug` when beginning and with `Information` or 
 
 ## SimpleCache
 
-The `ISimpleCache` interface and concrete types combine the extensions mentioned here in a simplified, configurable and dependency injection friendly package and provide a strongly-typed cache that can have custom serialization and default expiration options for all entries.
+The `ISimpleCache` interface and the corresponding `SimpleCache` is a dependency injection friendly `IDistributedCache` wrapper that exposes simplified, configurable and strongly-typed methods that can have custom serialization and default expiration options for all entries.
 
 The interface comes in two versions: `ISimpleCache<TKey, TValue>` and `ISimpleCache<TValue>`. The first is the most common usage cenario where you want to lookup values by a given key, the second is specific for cases where you have only a single value to be stored.
 
-By default, it will:
+By default an `ISimpleCache<TKey, TValue>` will:
 * Serialize and deserialize `TValue` using `System.Text.Json`.
 * Serialize the `TKey` with `key.ToString()`.
 * Prefix all keys with `typeof(TValue).FullName + ":"`.
@@ -150,7 +148,7 @@ private async Task<IEnumerable<WeatherForecast>> FetchAllForecastsAsync(Cancella
 
         // Get cached daily forecast if it exists and fetch if not.
         var forecast = await _dailyForecastCache
-            .GetOrFetchAsync(date, () => FetchSingleForecastAsync(date, cancellationToken), cancellationToken);
+            .GetOrSetAsync(date, () => FetchSingleForecastAsync(date, cancellationToken), cancellationToken);
 
         forecasts.Add(forecast);
     }
@@ -164,5 +162,3 @@ private async Task<WeatherForecast> FetchSingleForecastAsync(DateTime date, Canc
     // ...
 }
 ```
-
-That is it.
