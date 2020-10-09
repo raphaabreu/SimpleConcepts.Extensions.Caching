@@ -54,4 +54,4 @@ jobs:
           nuget-packages/*.nupkg
           nuget-packages/*.snupkg
     - name: Push with dotnet
-      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "nuget-packages/*.nupkg" --api-key ${{ secrets.nuget_api_key }} --source https://api.nuget.org/v3/index.json
