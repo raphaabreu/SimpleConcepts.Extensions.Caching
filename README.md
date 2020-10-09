@@ -1,3 +1,6 @@
+[![Nuget](https://img.shields.io/nuget/v/SimpleConcepts.Extensions.Caching)](https://www.nuget.org/packages/SimpleConcepts.Extensions.Caching/)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/raphaabreu/SimpleConcepts.Extensions.Caching/master/LICENSE)
+
 # SimpleConcepts.Extensions.Caching
 
 This package provides several extensions that make working with `IDistributedCache` easier, including Json object serialization, get with fallback, key space partitioning and logging. In addition to these extensions there is also a strongly typed `ISimpleCache<TKey, TValue>` interface that provides a dependency injection friendly and fully customizable wrapper for `IDistributedCache.`
