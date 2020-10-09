@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SimpleConcepts.Extensions.Caching\SimpleConcepts.Extensions.Caching.csproj" />
+    <ProjectReference Include="..\Sample.Application\Sample.Application.csproj" />
   </ItemGroup>
 
 

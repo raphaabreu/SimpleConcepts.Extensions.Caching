@@ -1,6 +1,6 @@
 using System;
 
-namespace Sample.Web
+namespace Sample.Application
 {
     public class WeatherForecast
     {

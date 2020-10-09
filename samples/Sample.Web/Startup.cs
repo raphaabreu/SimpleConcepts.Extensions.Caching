@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sample.Application;
 
 namespace Sample.Web
 {
@@ -40,6 +41,9 @@ namespace Sample.Web
             services.AddSimpleCache<DateTime, WeatherForecast>(opt => opt
                 .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromSeconds(15))
             );
+
+            services.AddScoped<IDistributedWeatherService, DistributedWeatherService>();
+            services.AddScoped<ISimpleWeatherService, SimpleWeatherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
