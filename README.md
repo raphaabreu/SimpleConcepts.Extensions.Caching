@@ -16,6 +16,8 @@ With .NET CLI:
 dotnet add package SimpleConcepts.Extensions.Caching
 ```
 
+An abstractions package is also available at `SimpleConcepts.Extensions.Caching.Abstractions`.
+
 ## Extensions
 
 #### Json object serialization
