@@ -40,10 +40,14 @@ namespace Sample.Web
             // Add SimpleCache for individual forecasts.
             services.AddSimpleCache<DateTime, WeatherForecast>(opt => opt
                 .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromSeconds(15))
+
+                // Configure default value factory to be used when a requested key is not found on cache
+                .WithValueFactory((date, provider, token) =>
+                    provider.GetRequiredService<IWeatherService>().FetchForecastAsync(date, token))
             );
 
             services.AddScoped<IDistributedWeatherService, DistributedWeatherService>();
-            services.AddScoped<ISimpleWeatherService, SimpleWeatherService>();
+            services.AddScoped<IWeatherService, WeatherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

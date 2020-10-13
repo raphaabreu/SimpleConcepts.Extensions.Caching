@@ -9,11 +9,7 @@ namespace Sample.Application
 {
     public class DistributedWeatherService : IDistributedWeatherService
     {
-        private static readonly Random RNG = new Random();
-        private static readonly string[] SUMMARIES = {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+        private readonly IWeatherService _weatherService;
         private readonly IDistributedCache _distributedCache;
 
         private readonly DistributedCacheEntryOptions _entryOptions = new DistributedCacheEntryOptions
@@ -21,8 +17,9 @@ namespace Sample.Application
             AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(15)
         };
 
-        public DistributedWeatherService(IDistributedCache distributedCache)
+        public DistributedWeatherService(IWeatherService weatherService, IDistributedCache distributedCache)
         {
+            _weatherService = weatherService;
             _distributedCache = distributedCache;
         }
 
@@ -37,7 +34,7 @@ namespace Sample.Application
                 // Get cached daily forecast if it exists and fetch if not.
                 var forecast = await _distributedCache
                     .GetOrSetJsonObjectAsync($"single-weather-forecast:{date.ToShortDateString()}",
-                        () => FetchSingleAsync(date, cancellationToken),
+                        () => _weatherService.FetchForecastAsync(date, cancellationToken),
                         _entryOptions,
                         cancellationToken);
 
@@ -45,20 +42,6 @@ namespace Sample.Application
             }
 
             return forecasts.AsEnumerable();
-        }
-
-        private async Task<WeatherForecast> FetchSingleAsync(DateTime date, CancellationToken cancellationToken)
-        {
-            // Simulate access to a database or third party service.
-            await Task.Delay(100, cancellationToken);
-
-            // Return mock result.
-            return new WeatherForecast
-            {
-                Date = date,
-                TemperatureC = RNG.Next(-20, 55),
-                Summary = SUMMARIES[RNG.Next(SUMMARIES.Length)]
-            };
         }
     }
 }

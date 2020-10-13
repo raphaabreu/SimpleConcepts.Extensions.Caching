@@ -133,6 +133,15 @@ services.AddSimpleCache<Guid, WeatherForecast>(opt => opt
     // Set custom expiration options
     .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromHours(1))
 );
+
+// With value factory as fallback
+services.AddSimpleCache<DateTime, WeatherForecast>(opt => opt
+    .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromSeconds(15))
+
+    // Configure default value factory to be used when a requested key is not found on cache
+    .WithValueFactory((date, provider, token) =>
+        provider.GetRequiredService<IWeatherService>().FetchForecastAsync(date, token))
+);
 ```
 
 Then, inject the interface where you need it:
@@ -151,19 +160,12 @@ private async Task<IEnumerable<WeatherForecast>> FetchAllForecastsAsync(Cancella
     {
         var date = DateTime.Now.Date.AddDays(index);
 
-        // Get cached daily forecast if it exists and fetch if not.
-        var forecast = await _dailyForecastCache
-            .GetOrSetAsync(date, () => FetchSingleForecastAsync(date, cancellationToken), cancellationToken);
+        // Get cached daily forecast from cache or from default value factory.
+        var forecast = await _dailyForecastCache.GetAsync(date, cancellationToken);
 
         forecasts.Add(forecast);
     }
 
     return forecasts.AsEnumerable();
-}
-
-private async Task<WeatherForecast> FetchSingleForecastAsync(DateTime date, CancellationToken cancellationToken)
-{
-    // Logic for fetching key missing from cache
-    // ...
 }
 ```

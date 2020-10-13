@@ -7,9 +7,29 @@ namespace Microsoft.Extensions.Caching.Distributed
 {
     public static class DistributedCacheGetOrSetExtensions
     {
+        public static void Set(this IDistributedCache cache, string key, byte[] value, TimeSpan absoluteExpirationRelativeToNow)
+        {
+            cache.Set(key, value,
+                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow });
+        }
+
+        public static Task SetAsync(this IDistributedCache cache, string key, byte[] value, TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default)
+        {
+            return cache.SetAsync(key, value,
+                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow }, token);
+        }
+
+
         public static byte[] GetOrSet(this IDistributedCache cache, string key, Func<byte[]> valueFactory)
         {
             return cache.GetOrSet(key, valueFactory, new DistributedCacheEntryOptions());
+        }
+
+        public static byte[] GetOrSet(this IDistributedCache cache, string key, Func<byte[]> valueFactory,
+            TimeSpan absoluteExpirationRelativeToNow)
+        {
+            return cache.GetOrSet(key, valueFactory,
+                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow });
         }
 
         public static byte[] GetOrSet(this IDistributedCache cache, string key, Func<byte[]> valueFactory,
@@ -29,10 +49,18 @@ namespace Microsoft.Extensions.Caching.Distributed
             return value;
         }
 
+
         public static Task<byte[]> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]>> valueFactory,
             CancellationToken token = default)
         {
             return cache.GetOrSetAsync(key, valueFactory, new DistributedCacheEntryOptions(), token);
+        }
+
+        public static Task<byte[]> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]>> valueFactory,
+            TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default)
+        {
+            return cache.GetOrSetAsync(key, valueFactory,
+                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow }, token);
         }
 
         public static async Task<byte[]> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]>> valueFactory,
@@ -52,9 +80,17 @@ namespace Microsoft.Extensions.Caching.Distributed
             return value;
         }
 
+
         public static string GetOrSetString(this IDistributedCache cache, string key, Func<string> valueFactory)
         {
             return cache.GetOrSetString(key, valueFactory, new DistributedCacheEntryOptions());
+        }
+
+        public static string GetOrSetString(this IDistributedCache cache, string key, Func<string> valueFactory,
+            TimeSpan absoluteExpirationRelativeToNow)
+        {
+            return cache.GetOrSetString(key, valueFactory,
+                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow });
         }
 
         public static string GetOrSetString(this IDistributedCache cache, string key, Func<string> valueFactory,
@@ -74,10 +110,18 @@ namespace Microsoft.Extensions.Caching.Distributed
             return value;
         }
 
+
         public static Task<string> GetOrSetStringAsync(this IDistributedCache cache, string key,
             Func<Task<string>> valueFactory, CancellationToken token = default)
         {
             return cache.GetOrSetStringAsync(key, valueFactory, new DistributedCacheEntryOptions(), token);
+        }
+
+        public static Task<string> GetOrSetStringAsync(this IDistributedCache cache, string key,
+            Func<Task<string>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default)
+        {
+            return cache.GetOrSetStringAsync(key, valueFactory,
+                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow }, token);
         }
 
         public static async Task<string> GetOrSetStringAsync(this IDistributedCache cache, string key,

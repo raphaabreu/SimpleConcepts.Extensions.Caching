@@ -8,44 +8,46 @@ namespace SimpleConcepts.Extensions.Caching
     public class SimpleCacheFactory : ISimpleCacheFactory
     {
         private readonly IServiceProvider _provider;
-        private readonly IOptionsMonitor<SimpleCacheOptions> _optionsMonitor;
 
-        public SimpleCacheFactory(IServiceProvider provider, IOptionsMonitor<SimpleCacheOptions> optionsMonitor)
+        public SimpleCacheFactory(IServiceProvider provider)
         {
             _provider = provider;
-            _optionsMonitor = optionsMonitor;
         }
 
         public ISimpleCache<TValue> Create<TValue>() where TValue : class
         {
-            var opts = _optionsMonitor.Get(GetOptionsName<TValue>());
+            var optionsMonitor = _provider.GetRequiredService<IOptionsMonitor<SimpleCacheOptions<TValue>>>();
+            var opts = optionsMonitor.Get(GetOptionsName<TValue>());
             var cache = _provider.GetRequiredService<IDistributedCache>();
 
-            return new SimpleCache<TValue>(cache, opts);
+            return new SimpleCache<TValue>(cache, _provider, opts);
         }
 
         public ISimpleCache<TValue> Create<TValue>(string name) where TValue : class
         {
-            var opts = _optionsMonitor.Get(GetOptionsName<TValue>(name));
+            var optionsMonitor = _provider.GetRequiredService<IOptionsMonitor<SimpleCacheOptions<TValue>>>();
+            var opts = optionsMonitor.Get(GetOptionsName<TValue>(name));
             var cache = _provider.GetRequiredService<IDistributedCache>();
 
-            return new SimpleCache<TValue>(cache, opts);
+            return new SimpleCache<TValue>(cache, _provider, opts);
         }
 
         public ISimpleCache<TKey, TValue> Create<TKey, TValue>() where TValue : class
         {
-            var opts = _optionsMonitor.Get(GetOptionsName<TKey, TValue>());
+            var optionsMonitor = _provider.GetRequiredService<IOptionsMonitor<SimpleCacheOptions<TKey, TValue>>>();
+            var opts = optionsMonitor.Get(GetOptionsName<TKey, TValue>());
             var cache = _provider.GetRequiredService<IDistributedCache>();
 
-            return new SimpleCache<TKey, TValue>(cache, opts);
+            return new SimpleCache<TKey, TValue>(cache, _provider, opts);
         }
 
         public ISimpleCache<TKey, TValue> Create<TKey, TValue>(string name) where TValue : class
         {
-            var opts = _optionsMonitor.Get(GetOptionsName<TKey, TValue>(name));
+            var optionsMonitor = _provider.GetRequiredService<IOptionsMonitor<SimpleCacheOptions<TKey, TValue>>>();
+            var opts = optionsMonitor.Get(GetOptionsName<TKey, TValue>(name));
             var cache = _provider.GetRequiredService<IDistributedCache>();
 
-            return new SimpleCache<TKey, TValue>(cache, opts);
+            return new SimpleCache<TKey, TValue>(cache, _provider, opts);
         }
 
         public static string GetOptionsName<TValue>()
