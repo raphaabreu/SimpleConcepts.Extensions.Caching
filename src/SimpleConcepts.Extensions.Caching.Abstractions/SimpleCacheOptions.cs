@@ -14,13 +14,13 @@ namespace SimpleConcepts.Extensions.Caching
         public bool FallbackToFactoryOnException { get; set; } = true;
     }
 
-    public class SimpleCacheOptions<TKey, TValue> : SimpleCacheOptions
+    public class SimpleCacheOptions<TKey, TValue> : SimpleCacheOptions where TValue : class
     {
-        public Func<TKey, IServiceProvider, CancellationToken, Task<TValue>>? ValueFactory { get; set; }
+        public Func<TKey, IServiceProvider, CancellationToken, Task<TValue?>>? ValueFactory { get; set; }
     }
 
-    public class SimpleCacheOptions<TValue> : SimpleCacheOptions
+    public class SimpleCacheOptions<TValue> : SimpleCacheOptions where TValue : class
     {
-        public Func<IServiceProvider, CancellationToken, Task<TValue>>? ValueFactory { get; set; }
+        public Func<IServiceProvider, CancellationToken, Task<TValue?>>? ValueFactory { get; set; }
     }
 }

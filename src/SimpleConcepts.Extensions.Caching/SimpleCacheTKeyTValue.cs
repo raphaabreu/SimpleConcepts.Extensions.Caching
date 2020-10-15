@@ -13,7 +13,7 @@ namespace SimpleConcepts.Extensions.Caching
         private readonly IKeySerializer _keySerializer;
         private readonly IValueSerializer _valueSerializer;
         private readonly DistributedCacheEntryOptions _defaultEntryOptions;
-        private readonly Func<TKey, IServiceProvider, CancellationToken, Task<TValue>>? _valueFactory;
+        private readonly Func<TKey, IServiceProvider, CancellationToken, Task<TValue?>>? _valueFactory;
         private readonly bool _fallbackToFactoryOnException;
 
         public SimpleCache(IDistributedCache cache, IServiceProvider serviceProvider, SimpleCacheOptions<TKey, TValue> options)
@@ -55,7 +55,10 @@ namespace SimpleConcepts.Extensions.Caching
 
             var value = await _valueFactory(key, _serviceProvider, token);
 
-            await SetAsync(key, value, token);
+            if (value != null)
+            {
+                await SetAsync(key, value, token);
+            }
 
             return value;
         }

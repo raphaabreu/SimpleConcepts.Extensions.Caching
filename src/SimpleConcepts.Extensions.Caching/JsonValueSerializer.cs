@@ -7,9 +7,9 @@ namespace SimpleConcepts.Extensions.Caching
     {
         public JsonSerializerOptions? Options { get; set; }
 
-        public byte[]? Serialize(object? value)
+        public byte[] Serialize(object value)
         {
-            return value == null ? null : JsonSerializer.SerializeToUtf8Bytes(value, Options);
+            return JsonSerializer.SerializeToUtf8Bytes(value, Options);
         }
 
         public object? Deserialize(byte[]? bytes, Type type)

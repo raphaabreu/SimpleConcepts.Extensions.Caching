@@ -13,6 +13,12 @@ namespace Sample.Application
 
         public async Task<WeatherForecast> FetchForecastAsync(DateTime date, CancellationToken cancellationToken)
         {
+            // Value factories that return null don't get cached by GetOrSet extensions.
+            if (RNG.NextDouble() > 0.5)
+            {
+                return null;
+            }
+
             // Simulate access to a database or third party service.
             await Task.Delay(100, cancellationToken);
 

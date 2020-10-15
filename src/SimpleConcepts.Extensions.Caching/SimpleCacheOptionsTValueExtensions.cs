@@ -9,35 +9,35 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SimpleCacheOptionsTValueExtensions
     {
-        public static SimpleCacheOptions<TValue> WithKeyPrefix<TValue>(this SimpleCacheOptions<TValue> options, string keyPrefix)
+        public static SimpleCacheOptions<TValue> WithKeyPrefix<TValue>(this SimpleCacheOptions<TValue> options, string keyPrefix) where TValue : class
         {
             options.KeySpace = keyPrefix + ":";
 
             return options;
         }
 
-        public static SimpleCacheOptions<TValue> WithKeySerializer<TValue>(this SimpleCacheOptions<TValue> options, IKeySerializer keySerializer)
+        public static SimpleCacheOptions<TValue> WithKeySerializer<TValue>(this SimpleCacheOptions<TValue> options, IKeySerializer keySerializer) where TValue : class
         {
             options.KeySerializer = keySerializer;
 
             return options;
         }
 
-        public static SimpleCacheOptions<TValue> WithValueSerializer<TValue>(this SimpleCacheOptions<TValue> options, IValueSerializer valueSerializer)
+        public static SimpleCacheOptions<TValue> WithValueSerializer<TValue>(this SimpleCacheOptions<TValue> options, IValueSerializer valueSerializer) where TValue : class
         {
             options.ValueSerializer = valueSerializer;
 
             return options;
         }
 
-        public static SimpleCacheOptions<TValue> WithDefaultEntryOptions<TValue>(this SimpleCacheOptions<TValue> options, DistributedCacheEntryOptions entryOptions)
+        public static SimpleCacheOptions<TValue> WithDefaultEntryOptions<TValue>(this SimpleCacheOptions<TValue> options, DistributedCacheEntryOptions entryOptions) where TValue : class
         {
             options.DefaultEntryOptions = entryOptions;
 
             return options;
         }
 
-        public static SimpleCacheOptions<TValue> WithAbsoluteExpiration<TValue>(this SimpleCacheOptions<TValue> options, DateTimeOffset absoluteExpiration)
+        public static SimpleCacheOptions<TValue> WithAbsoluteExpiration<TValue>(this SimpleCacheOptions<TValue> options, DateTimeOffset absoluteExpiration) where TValue : class
         {
             if (options.DefaultEntryOptions == null)
             {
@@ -49,7 +49,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return options;
         }
 
-        public static SimpleCacheOptions<TValue> WithAbsoluteExpirationRelativeToNow<TValue>(this SimpleCacheOptions<TValue> options, TimeSpan absoluteExpiration)
+        public static SimpleCacheOptions<TValue> WithAbsoluteExpirationRelativeToNow<TValue>(this SimpleCacheOptions<TValue> options, TimeSpan absoluteExpiration) where TValue : class
         {
             if (options.DefaultEntryOptions == null)
             {
@@ -61,7 +61,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return options;
         }
 
-        public static SimpleCacheOptions<TValue> WithSlidingExpiration<TValue>(this SimpleCacheOptions<TValue> options, TimeSpan slidingExpiration)
+        public static SimpleCacheOptions<TValue> WithSlidingExpiration<TValue>(this SimpleCacheOptions<TValue> options, TimeSpan slidingExpiration) where TValue : class
         {
             if (options.DefaultEntryOptions == null)
             {
@@ -74,14 +74,15 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         public static SimpleCacheOptions<TValue> WithValueFactory<TValue>(
-            this SimpleCacheOptions<TValue> options, Func<IServiceProvider, CancellationToken, Task<TValue>> valueFactory)
+            this SimpleCacheOptions<TValue> options, Func<IServiceProvider, CancellationToken, Task<TValue?>> valueFactory) where TValue : class
         {
             options.ValueFactory = valueFactory;
 
             return options;
         }
+
         public static SimpleCacheOptions<TValue> WithValueFactory<TValue>(
-            this SimpleCacheOptions<TValue> options, Func<Task<TValue>> valueFactory)
+            this SimpleCacheOptions<TValue> options, Func<Task<TValue?>> valueFactory) where TValue : class
         {
             return options
                 .WithValueFactory((provider, token) => valueFactory());

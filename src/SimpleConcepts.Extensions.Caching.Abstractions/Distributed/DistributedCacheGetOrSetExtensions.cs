@@ -20,19 +20,19 @@ namespace Microsoft.Extensions.Caching.Distributed
         }
 
 
-        public static byte[] GetOrSet(this IDistributedCache cache, string key, Func<byte[]> valueFactory)
+        public static byte[]? GetOrSet(this IDistributedCache cache, string key, Func<byte[]?> valueFactory)
         {
             return cache.GetOrSet(key, valueFactory, new DistributedCacheEntryOptions());
         }
 
-        public static byte[] GetOrSet(this IDistributedCache cache, string key, Func<byte[]> valueFactory,
+        public static byte[]? GetOrSet(this IDistributedCache cache, string key, Func<byte[]?> valueFactory,
             TimeSpan absoluteExpirationRelativeToNow)
         {
             return cache.GetOrSet(key, valueFactory,
                 new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow });
         }
 
-        public static byte[] GetOrSet(this IDistributedCache cache, string key, Func<byte[]> valueFactory,
+        public static byte[]? GetOrSet(this IDistributedCache cache, string key, Func<byte[]?> valueFactory,
             DistributedCacheEntryOptions options)
         {
             var cached = cache.Get(key);
@@ -44,26 +44,29 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             var value = valueFactory();
 
-            cache.Set(key, value, options);
+            if (value != null)
+            {
+                cache.Set(key, value, options);
+            }
 
             return value;
         }
 
 
-        public static Task<byte[]> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]>> valueFactory,
+        public static Task<byte[]?> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]?>> valueFactory,
             CancellationToken token = default)
         {
             return cache.GetOrSetAsync(key, valueFactory, new DistributedCacheEntryOptions(), token);
         }
 
-        public static Task<byte[]> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]>> valueFactory,
+        public static Task<byte[]?> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]?>> valueFactory,
             TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default)
         {
             return cache.GetOrSetAsync(key, valueFactory,
                 new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow }, token);
         }
 
-        public static async Task<byte[]> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]>> valueFactory,
+        public static async Task<byte[]?> GetOrSetAsync(this IDistributedCache cache, string key, Func<Task<byte[]?>> valueFactory,
             DistributedCacheEntryOptions options, CancellationToken token = default)
         {
             var cached = await cache.GetAsync(key, token);
@@ -75,25 +78,28 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             var value = await valueFactory();
 
-            await cache.SetAsync(key, value, options, token);
+            if (value != null)
+            {
+                await cache.SetAsync(key, value, options, token);
+            }
 
             return value;
         }
 
 
-        public static string GetOrSetString(this IDistributedCache cache, string key, Func<string> valueFactory)
+        public static string? GetOrSetString(this IDistributedCache cache, string key, Func<string?> valueFactory)
         {
             return cache.GetOrSetString(key, valueFactory, new DistributedCacheEntryOptions());
         }
 
-        public static string GetOrSetString(this IDistributedCache cache, string key, Func<string> valueFactory,
+        public static string? GetOrSetString(this IDistributedCache cache, string key, Func<string?> valueFactory,
             TimeSpan absoluteExpirationRelativeToNow)
         {
             return cache.GetOrSetString(key, valueFactory,
                 new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow });
         }
 
-        public static string GetOrSetString(this IDistributedCache cache, string key, Func<string> valueFactory,
+        public static string? GetOrSetString(this IDistributedCache cache, string key, Func<string?> valueFactory,
             DistributedCacheEntryOptions options)
         {
             var cached = cache.GetString(key);
@@ -105,27 +111,30 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             var value = valueFactory();
 
-            cache.SetString(key, value, options);
+            if (value != null)
+            {
+                cache.SetString(key, value, options);
+            }
 
             return value;
         }
 
 
-        public static Task<string> GetOrSetStringAsync(this IDistributedCache cache, string key,
-            Func<Task<string>> valueFactory, CancellationToken token = default)
+        public static Task<string?> GetOrSetStringAsync(this IDistributedCache cache, string key,
+            Func<Task<string?>> valueFactory, CancellationToken token = default)
         {
             return cache.GetOrSetStringAsync(key, valueFactory, new DistributedCacheEntryOptions(), token);
         }
 
-        public static Task<string> GetOrSetStringAsync(this IDistributedCache cache, string key,
-            Func<Task<string>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default)
+        public static Task<string?> GetOrSetStringAsync(this IDistributedCache cache, string key,
+            Func<Task<string?>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default)
         {
             return cache.GetOrSetStringAsync(key, valueFactory,
                 new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow }, token);
         }
 
-        public static async Task<string> GetOrSetStringAsync(this IDistributedCache cache, string key,
-            Func<Task<string>> valueFactory, DistributedCacheEntryOptions options, CancellationToken token = default)
+        public static async Task<string?> GetOrSetStringAsync(this IDistributedCache cache, string key,
+            Func<Task<string?>> valueFactory, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
             var cached = await cache.GetStringAsync(key, token);
 
@@ -136,7 +145,10 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             var value = await valueFactory();
 
-            await cache.SetStringAsync(key, value, options, token);
+            if (value != null)
+            {
+                await cache.SetStringAsync(key, value, options, token);
+            }
 
             return value;
         }

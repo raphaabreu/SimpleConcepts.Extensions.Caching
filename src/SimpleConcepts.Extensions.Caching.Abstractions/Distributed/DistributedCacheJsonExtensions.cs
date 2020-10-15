@@ -35,13 +35,13 @@ namespace Microsoft.Extensions.Caching.Distributed
 
 
 
-        public static void SetJsonObject<T>(this IDistributedCache cache, string key, T? value,
+        public static void SetJsonObject<T>(this IDistributedCache cache, string key, T value,
             JsonSerializerOptions? serializerOptions = null) where T : class
         {
             cache.SetJsonObject(key, value, new DistributedCacheEntryOptions(), serializerOptions);
         }
 
-        public static void SetJsonObject<T>(this IDistributedCache cache, string key, T? value,
+        public static void SetJsonObject<T>(this IDistributedCache cache, string key, T value,
             TimeSpan absoluteExpirationRelativeToNow, JsonSerializerOptions? serializerOptions = null) where T : class
         {
             cache.SetJsonObject(key, value,
@@ -49,28 +49,28 @@ namespace Microsoft.Extensions.Caching.Distributed
                 serializerOptions);
         }
 
-        public static void SetJsonObject<T>(this IDistributedCache cache, string key, T? value,
+        public static void SetJsonObject<T>(this IDistributedCache cache, string key, T value,
             DistributedCacheEntryOptions entryOptions, JsonSerializerOptions? serializerOptions = null) where T : class
         {
-            var bytes = value != null ? JsonSerializer.SerializeToUtf8Bytes(value, serializerOptions) : null;
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(value, serializerOptions);
 
             cache.Set(key, bytes, entryOptions);
         }
 
 
-        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T? value,
+        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T value,
             CancellationToken token = default) where T : class
         {
             return cache.SetJsonObjectAsync(key, value, new DistributedCacheEntryOptions(), null, token);
         }
 
-        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T? value,
+        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T value,
             JsonSerializerOptions? serializerOptions, CancellationToken token = default) where T : class
         {
             return cache.SetJsonObjectAsync(key, value, new DistributedCacheEntryOptions(), serializerOptions, token);
         }
 
-        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T? value,
+        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T value,
             TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default) where T : class
         {
             return cache.SetJsonObjectAsync(key, value,
@@ -78,7 +78,7 @@ namespace Microsoft.Extensions.Caching.Distributed
                 null, token);
         }
 
-        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T? value,
+        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T value,
             TimeSpan absoluteExpirationRelativeToNow, JsonSerializerOptions? serializerOptions,
             CancellationToken token = default) where T : class
         {
@@ -87,25 +87,25 @@ namespace Microsoft.Extensions.Caching.Distributed
                 serializerOptions, token);
         }
 
-        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T? value,
+        public static Task SetJsonObjectAsync<T>(this IDistributedCache cache, string key, T value,
             DistributedCacheEntryOptions entryOptions, JsonSerializerOptions? serializerOptions = null,
             CancellationToken token = default) where T : class
         {
-            var bytes = value != null ? JsonSerializer.SerializeToUtf8Bytes(value, serializerOptions) : null;
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(value, serializerOptions);
 
             return cache.SetAsync(key, bytes, entryOptions, token);
         }
 
 
 
-        public static T GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T> valueFactory,
+        public static T? GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T?> valueFactory,
             JsonSerializerOptions? serializerOptions = null) where T : class
         {
             return cache.GetOrSetJsonObject(key, valueFactory, new DistributedCacheEntryOptions(), serializerOptions);
         }
 
 
-        public static T GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T> valueFactory,
+        public static T? GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T?> valueFactory,
             TimeSpan absoluteExpirationRelativeToNow, JsonSerializerOptions? serializerOptions = null) where T : class
         {
             return cache.GetOrSetJsonObject<T>(key, valueFactory,
@@ -113,7 +113,7 @@ namespace Microsoft.Extensions.Caching.Distributed
                 serializerOptions);
         }
 
-        public static T GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T> valueFactory,
+        public static T? GetOrSetJsonObject<T>(this IDistributedCache cache, string key, Func<T?> valueFactory,
             DistributedCacheEntryOptions entryOptions, JsonSerializerOptions? serializerOptions = null) where T : class
         {
             var cached = cache.GetJsonObject<T>(key, serializerOptions);
@@ -125,26 +125,29 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             var value = valueFactory();
 
-            cache.SetJsonObject(key, value, entryOptions, serializerOptions);
+            if (value != null)
+            {
+                cache.SetJsonObject(key, value, entryOptions, serializerOptions);
+            }
 
             return value;
         }
 
 
-        public static Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> valueFactory, CancellationToken token = default) where T : class
+        public static Task<T?> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T?>> valueFactory, CancellationToken token = default) where T : class
         {
             return cache.GetOrSetJsonObjectAsync(key, valueFactory, new DistributedCacheEntryOptions(), null, token);
         }
-        public static Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> valueFactory, JsonSerializerOptions? serializerOptions,
+        public static Task<T?> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T?>> valueFactory, JsonSerializerOptions? serializerOptions,
             CancellationToken token = default) where T : class
         {
             return cache.GetOrSetJsonObjectAsync(key, valueFactory, new DistributedCacheEntryOptions(), serializerOptions, token);
         }
 
-        public static Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, JsonSerializerOptions? serializerOptions,
+        public static Task<T?> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T?>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, JsonSerializerOptions? serializerOptions,
             CancellationToken token = default) where T : class
         {
             return cache.GetOrSetJsonObjectAsync(key, valueFactory,
@@ -152,23 +155,23 @@ namespace Microsoft.Extensions.Caching.Distributed
                 serializerOptions, token);
         }
 
-        public static Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default) where T : class
+        public static Task<T?> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T?>> valueFactory, TimeSpan absoluteExpirationRelativeToNow, CancellationToken token = default) where T : class
         {
             return cache.GetOrSetJsonObjectAsync(key, valueFactory,
                 new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow },
                 null, token);
         }
 
-        public static Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> valueFactory, DistributedCacheEntryOptions entryOptions,
+        public static Task<T?> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T?>> valueFactory, DistributedCacheEntryOptions entryOptions,
             CancellationToken token = default) where T : class
         {
             return cache.GetOrSetJsonObjectAsync<T>(key, valueFactory, entryOptions, null, token);
         }
 
-        public static async Task<T> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
-            Func<Task<T>> valueFactory, DistributedCacheEntryOptions entryOptions,
+        public static async Task<T?> GetOrSetJsonObjectAsync<T>(this IDistributedCache cache, string key,
+            Func<Task<T?>> valueFactory, DistributedCacheEntryOptions entryOptions,
             JsonSerializerOptions? serializerOptions = null, CancellationToken token = default) where T : class
         {
             var cached = await cache.GetJsonObjectAsync<T>(key, serializerOptions, token);
@@ -180,7 +183,10 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             var value = await valueFactory();
 
-            await cache.SetJsonObjectAsync(key, value, entryOptions, serializerOptions, token);
+            if (value != null)
+            {
+                await cache.SetJsonObjectAsync(key, value, entryOptions, serializerOptions, token);
+            }
 
             return value;
         }
